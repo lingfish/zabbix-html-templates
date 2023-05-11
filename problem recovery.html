@@ -174,7 +174,7 @@
             }
         }
 
-        @media only screen and (max-width: 350px) {
+        @media only screen and (max-width: 499px) {
             td {
                 padding: 15px 25px;
             }
@@ -194,7 +194,6 @@
             }
 
             td.notification {
-                text-align: center;
                 padding: 10px 25px 15px 25px;
             }
 
@@ -246,7 +245,7 @@
                     <tr>
                         <td class="healthy notification">
                             <h1><span class="icon">&check;</span>{TRIGGER.SEVERITY}</h1>
-                            <p>Host: {HOST.HOST} ({HOST.IP})</p>
+                            <p>Host: {HOST.HOST}</p>
                             <p>Status: {TRIGGER.STATUS}</p>
                             <p>Problem resolved: {EVENT.RECOVERY.TIME} on {EVENT.RECOVERY.DATE}</p>
                             <p>Item: <code>{ITEM.KEY1}</code></p>
