@@ -1,0 +1,429 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Zabbix Alert - Incident Resolved</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        body {
+            background-color: #f4f5f7;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #333333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .header .status-badge {
+            display: inline-block;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-top: 12px;
+        }
+
+        .content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .incident-summary {
+            background-color: #f0fff4;
+            border-left: 4px solid #48bb78;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+
+        .incident-summary h2 {
+            margin: 0 0 8px 0;
+            font-size: 18px;
+            color: #48bb78;
+            font-weight: 600;
+        }
+
+        .incident-summary p {
+            margin: 0;
+            font-size: 15px;
+            line-height: 1.5;
+            color: #4a5568;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 16px;
+            margin-bottom: 25px;
+        }
+
+        .detail-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .detail-value {
+            font-size: 15px;
+            color: #2d3748;
+            line-height: 1.5;
+        }
+
+        .detail-value a {
+            color: #48bb78;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .detail-value a:hover {
+            text-decoration: underline;
+        }
+
+        .impact-section {
+            background-color: #f0fff4;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .impact-section h3 {
+            margin: 0 0 12px 0;
+            font-size: 16px;
+            color: #4a5568;
+            font-weight: 600;
+        }
+
+        .component-status {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background-color: white;
+            border-radius: 6px;
+            border: 1px solid #c6f6d5;
+        }
+
+        .component-status .status-indicator {
+            width: 12px;
+            height: 12px;
+            background-color: #48bb78;
+            border-radius: 50%;
+        }
+
+        .component-status .component-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #2d3748;
+        }
+
+        .timeline {
+            border-left: 2px solid #e2e8f0;
+            padding-left: 20px;
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .timeline-item {
+            margin-bottom: 18px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            background-color: #e53e3e;
+            border-radius: 50%;
+        }
+
+        .timeline-item .timeline-time {
+            font-size: 12px;
+            color: #718096;
+            margin-bottom: 4px;
+        }
+
+        .timeline-item .timeline-message {
+            font-size: 14px;
+            color: #4a5568;
+            line-height: 1.4;
+        }
+
+        .timeline-item:last-child::before {
+            background-color: #48bb78;
+        }
+
+        .timeline-item:last-child .timeline-message {
+            color: #22543d;
+        }
+
+        .cta-section {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background-color: #48bb78;
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #38a169;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: white;
+            color: #4a5568;
+            border: 1px solid #e2e8f0;
+        }
+
+        .btn-secondary:hover {
+            background-color: #f7fafc;
+            border-color: #cbd5e0;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 25px;
+            background-color: #edf2f7;
+            border-radius: 8px;
+            margin-top: 25px;
+        }
+
+        .footer p {
+            margin: 4px 0;
+            font-size: 13px;
+            color: #718096;
+        }
+
+        .footer a {
+            color: #48bb78;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .service-status {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 8px;
+        }
+
+        .service-status .status-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: #48bb78;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .service-status .status-text {
+            font-size: 14px;
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                width: 100% !important;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .details-grid {
+                grid-template-columns: 120px 1fr;
+            }
+
+            .cta-section {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .component-status {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <table class="container" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+            <td align="center" style="padding: 20px 10px;">
+                <!-- Header -->
+                <div class="header">
+                    <h1>Incident Resolved</h1>
+                    <span class="status-badge" style="background-color: rgba(72, 187, 120, 0.8);">Service Restored</span>
+                </div>
+
+                <!-- Content -->
+                <div class="content">
+                    <!-- Incident Summary -->
+                    <div class="incident-summary">
+                        <h2>Service Restored</h2>
+                        <p>The issue affecting <strong>{HOST.HOST}</strong> has been resolved.</p>
+                    </div>
+
+                    <!-- Details Grid -->
+                    <div class="details-grid">
+                        <div class="detail-label">Affected Service</div>
+                        <div class="detail-value">
+                            <strong>{HOST.HOST}</strong><br>
+                            <small style="color: #718096;">{HOST.NAME}</small>
+                        </div>
+
+                        <div class="detail-label">Status</div>
+                        <div class="detail-value">
+                            <span style="color: #48bb78; font-weight: 600;">All Systems Operational</span>
+                        </div>
+
+                        <div class="detail-label">Trigger</div>
+                        <div class="detail-value">
+                            <strong>{TRIGGER.NAME}</strong>
+                        </div>
+
+                        <div class="detail-label">Item</div>
+                        <div class="detail-value">
+                            <code>{ITEM.KEY1}</code>
+                        </div>
+
+                        <div class="detail-label">Resolution Time</div>
+                        <div class="detail-value">
+                            {EVENT.RECOVERY.DATE} at {EVENT.RECOVERY.TIME}
+                        </div>
+
+                        <div class="detail-label">Duration</div>
+                        <div class="detail-value">
+                            {EVENT.DURATION}
+                        </div>
+                    </div>
+
+                    <!-- Component Status -->
+                    <div class="impact-section">
+                        <h3>Current Status</h3>
+                        <div class="component-status">
+                            <div class="status-indicator"></div>
+                            <div class="component-name">
+                                <strong>{HOST.HOST}</strong> - Service fully restored
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Timeline -->
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-time">{EVENT.DATE} {EVENT.TIME}</div>
+                            <div class="timeline-message">
+                                <strong>Incident detected</strong><br>
+                                Trigger "{TRIGGER.NAME}" activated with {TRIGGER.SEVERITY} severity.
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-time">{EVENT.RECOVERY.DATE} {EVENT.RECOVERY.TIME}</div>
+                            <div class="timeline-message">
+                                <strong>Incident resolved</strong><br>
+                                Service has been restored and is now operating normally.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CTA Buttons -->
+                    <div class="cta-section">
+                        <a href="http://<YOUR URL>/tr_events.php?triggerid={TRIGGER.ID}&eventid={EVENT.ID}" class="btn btn-primary">
+                            View in Zabbix
+                        </a>
+                        <!--
+                        <a href="https://<YOUR URL>/chart.php?itemids[]={ITEM.KEY1}" class="btn btn-secondary">
+                            View Metrics
+                        </a>
+                        -->
+                    </div>
+
+                    <!-- Footer -->
+                    <!--
+                    <div class="footer">
+                        <p><strong>Thanks for your patience!</strong></p>
+                        <p style="margin-top: 12px; font-size: 12px;">You are receiving this email because you are subscribed to notifications for {HOST.HOST}</p>
+                        <p style="margin-top: 8px; font-size: 12px;">
+                            <a href="https://example.com/notifications">Manage preferences</a> |
+                            <a href="https://example.com/unsubscribe">Unsubscribe</a>
+                        </p>
+                    </div>
+                    -->
+                </div>
+
+                <!-- Service Status Footer -->
+                <div class="service-status">
+                    <div>
+                        <span class="status-dot"></span>
+                        <span class="status-text">All services are now operational</span>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>
