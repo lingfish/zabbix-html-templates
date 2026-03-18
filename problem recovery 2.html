@@ -287,33 +287,20 @@
                 padding: 20px;
             }
 
-            /* Mobile Layout A: Stacked (labels above values) */
-            .mobile-layout-a .details-grid {
-                display: flex;
-                flex-direction: column;
-                gap: 8px;
-            }
-            .mobile-layout-a .detail-label {
-                font-size: 12px;
-                margin-bottom: 2px;
-            }
-            .mobile-layout-a .detail-value {
-                font-size: 14px;
-                margin-bottom: 12px;
-            }
-
-            /* Mobile Layout B: Side-by-side with better spacing */
-            .mobile-layout-b .details-grid {
+            .details-grid {
                 grid-template-columns: 110px 1fr;
                 gap: 14px;
             }
-            .mobile-layout-b .detail-label {
+
+            .detail-label {
                 font-size: 12px;
             }
-            .mobile-layout-b .detail-value {
+
+            .detail-value {
                 font-size: 14px;
             }
-            .mobile-layout-b .detail-value code {
+
+            .detail-value code {
                 font-size: 12px;
                 word-break: break-all;
             }
@@ -346,12 +333,11 @@
     </style>
 </head>
 
-<body class="mobile-layout-b">
+<body>
     <!-- Preheader - visible in email client preview -->
     <div style="display:none; max-height:0; overflow:hidden; mso-hide:all;">
         Resolved: {HOST.HOST} - {TRIGGER.NAME} - Duration: {EVENT.DURATION}
     </div>
-    <!-- Change class to "mobile-layout-a" to compare stacked layout on mobile -->
     <table class="container" cellpadding="0" cellspacing="0" width="100%">
         <tr>
             <td align="center" style="padding: 20px 10px;">

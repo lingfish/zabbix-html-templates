@@ -8,15 +8,13 @@ This repository contains Zabbix HTML email notification templates. These are mod
 
 ```
 zabbix-html-templates/
-├── preview.html          # Preview template
-├── preview-mockup.html   # Mockup version
 ├── problem.html          # Problem alert template
 ├── problem 2.html        # Alternative problem template
 ├── problem recovery.html # Recovery alert template
 ├── problem recovery 2.html # Alternative recovery template
-├── sample problem.eml    # Sample email file
-└── .agents/skills/
-    └── playwright-cli/   # Browser automation skill
+├── .agents/skills/
+│   └── playwright-cli/   # Browser automation skill
+└── .gitignore
 ```
 
 ## Build / Lint / Test Commands
@@ -112,14 +110,20 @@ No automated linting is configured. For HTML validation:
 - Ensure sufficient color contrast
 - Use readable font sizes (minimum 14px for body text)
 
-### Dark Mode Support
-Include dark mode styles:
-```css
-@media (prefers-color-scheme: dark) {
-  body { background:#111 !important; }
-  .hero { background:#c00 !important; }
-  a { color:#fff !important; }
-}
+### Mobile Layout
+Templates use a side-by-side layout on mobile with narrower columns:
+
+- Label column: 110px
+- Value column: 1fr
+- Gap: 14px
+- Font sizes: 12px labels, 14px values
+
+### Preheader Text
+Include hidden preheader text for email client preview:
+```html
+<div style="display:none; max-height:0; overflow:hidden; mso-hide:all;">
+    Problem: {HOST.HOST} - {TRIGGER.NAME} - {TRIGGER.SEVERITY}
+</div>
 ```
 
 ## Common Tasks
@@ -139,7 +143,7 @@ Include dark mode styles:
 
 ### Testing Responsive Design
 ```bash
-playwright-cli open preview.html
+playwright-cli open "problem 2.html"
 playwright-cli resize 320 568    # Small mobile
 playwright-cli resize 375 667    # iPhone
 playwright-cli resize 768 1024   # Tablet
